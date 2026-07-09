@@ -1,0 +1,38 @@
+import Link from "next/link";
+import { Wordmark } from "@/components/brand/Logo";
+
+const LINKS = [
+  { href: "/#work", label: "Work" },
+  { href: "/#tools", label: "The Studio" },
+  { href: "/studio", label: "Enter Studio" },
+  { href: "/hire", label: "Start a Project" },
+];
+
+export function Nav() {
+  return (
+    <header className="sticky top-0 z-50 border-b border-[var(--color-line)] bg-[color-mix(in_oklab,var(--color-void)_82%,transparent)] backdrop-blur-md">
+      <div className="container-studio flex h-16 items-center justify-between">
+        <Link href="/" aria-label="Linework Studio home">
+          <Wordmark />
+        </Link>
+        <nav aria-label="Primary" className="hidden items-center gap-1 md:flex">
+          {LINKS.map((l) => (
+            <Link
+              key={l.href}
+              href={l.href}
+              className="mono px-3 py-2 text-[12px] tracking-wide text-[var(--color-dim)] transition-colors hover:text-[var(--color-ink)]"
+            >
+              {l.label}
+            </Link>
+          ))}
+        </nav>
+        <Link
+          href="/hire"
+          className="mono rounded-sm border border-[var(--color-blue)] px-3.5 py-2 text-[11px] font-semibold tracking-wide text-[var(--color-blue)] transition-all hover:bg-[var(--color-blue)] hover:text-[var(--color-void)] md:hidden"
+        >
+          HIRE
+        </Link>
+      </div>
+    </header>
+  );
+}
