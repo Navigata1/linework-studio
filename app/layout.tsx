@@ -8,13 +8,13 @@ const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono", displ
 const serif = Fraunces({ subsets: ["latin"], variable: "--font-serif", display: "swap", style: ["normal", "italic"], weight: ["400", "500", "600"] });
 
 export const metadata: Metadata = {
-  title: "Linework Studio — Jasmine Johnson · Civil Engineering & CAD",
+  title: "Linework Studio — Inspired design, drafted true · Jasmine Johnson, CE",
   description:
-    "Field to finish. Site inspection reports, CAD drafting, and instant parcel research — one studio, precision-built.",
+    "A Southern California CAD & inspection studio. Sketches become drawings, site photos become reports, addresses become dossiers — inspired design, drafted true.",
   metadataBase: new URL("https://jasminelineworks.com"),
   openGraph: {
-    title: "Linework Studio",
-    description: "Field to finish. Every line accounted for.",
+    title: "Linework Studio — Inspired design, drafted true",
+    description: "CAD drafting, site inspection reports, and instant parcel research — one studio for Jasmine Johnson, CE.",
     type: "website",
   },
 };
