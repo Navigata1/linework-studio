@@ -10,27 +10,40 @@ type Station = { id: string; label: string };
 export function PlumbSpine({ stations }: { stations: Station[] }) {
   const [progress, setProgress] = useState(0);
   const [active, setActive] = useState(0);
+  const [marks, setMarks] = useState<number[]>([]);
   const raf = useRef(0);
 
   useEffect(() => {
     const ids = stations.map((s) => document.getElementById(s.id));
+    // station marks at each section's REAL document position, so the bob
+    // crosses a dot exactly as its section arrives
+    const measure = () => {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      setMarks(
+        ids.map((el) => {
+          if (!el || max <= 0) return 0;
+          return Math.min(1, Math.max(0, (el.offsetTop - window.innerHeight * 0.45) / max));
+        }),
+      );
+    };
     const onScroll = () => {
       if (raf.current) return;
       raf.current = requestAnimationFrame(() => {
         raf.current = 0;
         const max = document.documentElement.scrollHeight - window.innerHeight;
         setProgress(max > 0 ? Math.min(1, window.scrollY / max) : 0);
-        // active station = last one whose top has passed the viewport middle
         const mid = window.scrollY + window.innerHeight * 0.45;
         let idx = 0;
         ids.forEach((el, i) => { if (el && el.offsetTop <= mid) idx = i; });
         setActive(idx);
       });
     };
+    measure();
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => { window.removeEventListener("scroll", onScroll); window.removeEventListener("resize", onScroll); cancelAnimationFrame(raf.current); };
+    const onResize = () => { measure(); onScroll(); };
+    window.addEventListener("resize", onResize);
+    return () => { window.removeEventListener("scroll", onScroll); window.removeEventListener("resize", onResize); cancelAnimationFrame(raf.current); };
   }, [stations]);
 
   return (
@@ -56,7 +69,8 @@ export function PlumbSpine({ stations }: { stations: Station[] }) {
       </div>
       {/* survey stations */}
       {stations.map((s, i) => {
-        const top = stations.length > 1 ? (i / (stations.length - 1)) * 100 : 0;
+        const fallback = stations.length > 1 ? i / (stations.length - 1) : 0;
+        const top = (marks[i] ?? fallback) * 100;
         const on = i <= active;
         return (
           <div key={s.id} className="absolute left-1/2 flex -translate-x-1/2 items-center" style={{ top: `${top}%` }}>

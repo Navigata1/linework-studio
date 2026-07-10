@@ -22,7 +22,13 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${display.variable} ${body.variable} ${mono.variable} ${serif.variable}`}>
-      <body className="grain">{children}</body>
+      <body className="grain">
+        {/* no-JS: scroll-reveal content must never stay hidden */}
+        <noscript>
+          <style>{`.rv{opacity:1 !important;transform:none !important}`}</style>
+        </noscript>
+        {children}
+      </body>
     </html>
   );
 }

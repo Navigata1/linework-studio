@@ -100,19 +100,7 @@ export function BeforeAfter() {
       <div className="absolute inset-0"><CadSide /></div>
       <div className="absolute inset-0" style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}><SketchSide /></div>
 
-      {/* divider handle */}
-      <div className="absolute inset-y-0" style={{ left: `${pos}%` }}>
-        <div className="absolute inset-y-0 -ml-px w-[2px] bg-[var(--color-amber)]" />
-        <div className="absolute top-1/2 -ml-[18px] -mt-[18px] flex h-9 w-9 items-center justify-center rounded-full border border-[var(--color-amber)] bg-[var(--color-void)] text-[var(--color-amber)] shadow-lg">
-          <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M4 1 L1 5 L4 9 M10 1 L13 5 L10 9" stroke="currentColor" strokeWidth="1.5" /></svg>
-        </div>
-      </div>
-
-      {/* labels */}
-      <span className="mono absolute left-3 top-3 rounded-sm bg-[rgba(0,0,0,0.45)] px-2 py-1 text-[10px] tracking-[0.18em] text-[#efe9da]">CLIENT SKETCH</span>
-      <span className="mono absolute right-3 top-3 rounded-sm bg-[rgba(0,0,0,0.45)] px-2 py-1 text-[10px] tracking-[0.18em] text-[var(--color-cyan)]">DRAFTED</span>
-
-      {/* a11y slider */}
+      {/* a11y slider — before the handle so peer-focus can light it up */}
       <input
         type="range"
         min={4}
@@ -120,8 +108,21 @@ export function BeforeAfter() {
         value={Math.round(pos)}
         onChange={(e) => setPos(Number(e.target.value))}
         aria-label="Reveal drafted drawing"
-        className="absolute inset-x-0 bottom-0 h-8 w-full cursor-ew-resize opacity-0"
+        className="peer absolute inset-x-0 bottom-0 h-8 w-full cursor-ew-resize opacity-0"
       />
+
+      {/* divider handle — visibly ringed when the slider has keyboard focus */}
+      <div className="pointer-events-none absolute inset-y-0" style={{ left: `${pos}%` }}>
+        <div className="absolute inset-y-0 -ml-px w-[2px] bg-[var(--color-amber)]" />
+        <div className="absolute top-1/2 -ml-[18px] -mt-[18px] flex h-9 w-9 items-center justify-center rounded-full border border-[var(--color-amber)] bg-[var(--color-void)] text-[var(--color-amber)] shadow-lg transition-shadow peer-focus-visible:[box-shadow:0_0_0_3px_var(--color-amber),0_0_18px_var(--color-amber)]" />
+      </div>
+      <div className="pointer-events-none absolute top-1/2 -mt-[5px] -ml-[7px]" style={{ left: `${pos}%` }}>
+        <svg width="14" height="10" viewBox="0 0 14 10" fill="none" className="text-[var(--color-amber)]"><path d="M4 1 L1 5 L4 9 M10 1 L13 5 L10 9" stroke="currentColor" strokeWidth="1.5" /></svg>
+      </div>
+
+      {/* labels */}
+      <span className="mono absolute left-3 top-3 rounded-sm bg-[rgba(0,0,0,0.45)] px-2 py-1 text-[10px] tracking-[0.18em] text-[#efe9da]">CLIENT SKETCH</span>
+      <span className="mono absolute right-3 top-3 rounded-sm bg-[rgba(0,0,0,0.45)] px-2 py-1 text-[10px] tracking-[0.18em] text-[var(--color-cyan)]">DRAFTED</span>
     </div>
   );
 }

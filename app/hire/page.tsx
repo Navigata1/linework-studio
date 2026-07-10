@@ -1,5 +1,6 @@
 import { Nav } from "@/components/site/Nav";
 import { Footer } from "@/components/site/Footer";
+import { SmoothScroll } from "@/components/site/SmoothScroll";
 import { IntakeForm } from "@/components/hire/IntakeForm";
 
 export const metadata = { title: "Start a Project · Brain Loft Studios" };
@@ -13,6 +14,7 @@ const STEPS = [
 export default function HirePage() {
   return (
     <main className="grid-blueprint min-h-screen">
+      <SmoothScroll />
       <Nav />
       <section className="border-b border-[var(--color-line)]">
         <div className="container-studio grid gap-12 py-16 lg:grid-cols-[1fr_1.3fr]">

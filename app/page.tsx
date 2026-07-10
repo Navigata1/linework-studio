@@ -2,9 +2,8 @@ import Link from "next/link";
 import { Nav } from "@/components/site/Nav";
 import { Footer } from "@/components/site/Footer";
 import { HeroPlan } from "@/components/site/HeroPlan";
-import { LiquidHero } from "@/components/site/LiquidHero";
-import { ScrollDepth } from "@/components/site/ScrollDepth";
-import { FluidBackground } from "@/components/site/FluidBackground";
+import { LiquidCanvas } from "@/components/site/LiquidCanvas";
+import { SmoothScroll } from "@/components/site/SmoothScroll";
 import { PlumbSpine } from "@/components/site/PlumbSpine";
 import { Wave } from "@/components/site/Wave";
 import { Marquee } from "@/components/site/Marquee";
@@ -28,15 +27,16 @@ const STATIONS = [
 export default function Home() {
   return (
     <main className="relative min-h-screen">
-      <ScrollDepth />
-      <FluidBackground />
+      <SmoothScroll />
+      <LiquidCanvas />
+      {/* scroll-driven scrim: keeps text legible as the cloudscape brightens */}
+      <div className="depth-veil" aria-hidden />
       <PlumbSpine stations={STATIONS} />
       <div className="grid-blueprint relative z-10">
       <Nav />
 
       {/* ───────── HERO — the surface of the water ───────── */}
       <section id="top" className="relative flex min-h-[100svh] items-center overflow-hidden border-b border-[var(--color-line)]">
-        <LiquidHero />
         <HeroPlan />
         <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,color-mix(in_oklab,var(--color-void)_78%,transparent)_26%,transparent_70%)]" />
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-[linear-gradient(180deg,transparent,color-mix(in_oklab,var(--color-void)_70%,transparent))]" />
