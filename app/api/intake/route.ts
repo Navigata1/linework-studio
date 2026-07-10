@@ -20,7 +20,7 @@ function briefHtml(i: Intake): string {
     <h2 style="font-family:'Space Grotesk',Arial">New project request — ${i.projectType}</h2>
     <table>${row("Name", i.name)}${row("Email", i.email)}${row("Phone", i.phone)}${row("Dimensions", i.dimensions)}${row("Deadline", i.deadline)}${row("Budget", i.budget)}</table>
     <p style="margin-top:16px;white-space:pre-wrap">${i.description}</p>
-    <p style="color:#5C6A82;font:11px monospace;margin-top:20px">Linework Studio · intake</p>
+    <p style="color:#5C6A82;font:11px monospace;margin-top:20px">Brain Loft Studios · intake</p>
   </div>`;
 }
 
@@ -33,7 +33,7 @@ async function sendEmail(i: Intake): Promise<boolean> {
       method: "POST",
       headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
       body: JSON.stringify({
-        from: "Linework Studio <onboarding@resend.dev>",
+        from: "Brain Loft Studios <onboarding@resend.dev>",
         to: [to],
         reply_to: i.email,
         subject: `New CAD request — ${i.projectType} — ${i.name}`,

@@ -7,12 +7,12 @@
    ─────────────────────────────────────────────── */
 
 @theme {
-  --color-void: #05070c;
-  --color-carbon: #0a0e16;
-  --color-panel: #0d121c;
-  --color-panel-2: #111826;
-  --color-line: #1b2536;
-  --color-line-2: #26344b;
+  --color-void: #030916;
+  --color-carbon: #06101f;
+  --color-panel: #0a1526;
+  --color-panel-2: #0e1c31;
+  --color-line: #16263e;
+  --color-line-2: #234067;
   --color-blue: #2e9bff;
   --color-blue-deep: #0a63d6;
   --color-cyan: #43e0d0;
@@ -112,6 +112,86 @@
   .hairline { height: 1px; background: linear-gradient(90deg, transparent, var(--color-line-2), transparent); }
 
   .serif { font-family: var(--font-serif); }
+
+  /* ── Liquid glass surfaces ─────────────────────────── */
+  .glass {
+    background: linear-gradient(168deg, rgba(20, 34, 58, 0.52), rgba(8, 16, 30, 0.34));
+    backdrop-filter: blur(16px) saturate(160%);
+    -webkit-backdrop-filter: blur(16px) saturate(160%);
+    border: 1px solid rgba(110, 165, 255, 0.13);
+    border-radius: 10px;
+    box-shadow:
+      inset 0 1px 0 rgba(190, 220, 255, 0.10),
+      inset 0 -14px 30px -22px rgba(46, 155, 255, 0.28),
+      0 18px 44px -22px rgba(1, 6, 16, 0.9);
+  }
+  .glass-deep {
+    background: linear-gradient(172deg, rgba(12, 24, 44, 0.66), rgba(5, 11, 22, 0.5));
+    backdrop-filter: blur(22px) saturate(170%);
+    -webkit-backdrop-filter: blur(22px) saturate(170%);
+    border: 1px solid rgba(110, 165, 255, 0.16);
+    border-radius: 12px;
+    box-shadow:
+      inset 0 1px 0 rgba(190, 220, 255, 0.12),
+      0 26px 60px -26px rgba(1, 6, 16, 0.95);
+  }
+  .glass-toolbar {
+    background: linear-gradient(180deg, rgba(6, 14, 28, 0.72), rgba(4, 10, 21, 0.55));
+    backdrop-filter: blur(20px) saturate(170%);
+    -webkit-backdrop-filter: blur(20px) saturate(170%);
+    border-bottom: 1px solid rgba(110, 165, 255, 0.12);
+  }
+  /* specular sweep across glass on hover */
+  .glass-spec { position: relative; overflow: hidden; }
+  .glass-spec::before {
+    content: ""; position: absolute; inset: -60% -30%; pointer-events: none;
+    background: linear-gradient(115deg, transparent 42%, rgba(190, 220, 255, 0.09) 50%, transparent 58%);
+    transform: translateX(-70%); transition: transform 0.9s var(--ease-expo);
+  }
+  .glass-spec:hover::before { transform: translateX(55%); }
+
+  /* ── Lily-pad water physics ────────────────────────── */
+  @keyframes lily-bob {
+    0%, 100% { transform: translateY(0) rotate(0.001deg); }
+    50% { transform: translateY(-5px) rotate(0.001deg); }
+  }
+  .lily-bob { animation: lily-bob 7s ease-in-out infinite; }
+  @keyframes lily-ripple {
+    0% { transform: translate(-50%, -50%) scale(0.15); opacity: 0.75; border-width: 2px; }
+    100% { transform: translate(-50%, -50%) scale(2.6); opacity: 0; border-width: 1px; }
+  }
+  .lily-ripple {
+    position: absolute; left: 0; top: 0; width: 130px; height: 130px;
+    border-radius: 9999px; pointer-events: none;
+    border: 2px solid rgba(120, 190, 255, 0.55);
+    background: radial-gradient(circle, rgba(120, 190, 255, 0.13), transparent 65%);
+    animation: lily-ripple 1.15s var(--ease-out) forwards;
+    mix-blend-mode: screen;
+  }
+  @keyframes lily-ripple-under {
+    0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0.5; }
+    100% { transform: translate(-50%, -50%) scale(3.4); opacity: 0; }
+  }
+  .lily-ripple-under {
+    position: absolute; left: 50%; top: 88%; width: 160px; height: 54px;
+    border-radius: 9999px; pointer-events: none; z-index: -1;
+    border: 1.5px solid rgba(67, 224, 208, 0.35);
+    animation: lily-ripple-under 1.4s var(--ease-out) forwards;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .lily-bob { animation: none; }
+    .lily-ripple, .lily-ripple-under { display: none; }
+  }
+
+  /* ── Depth story (scroll-driven abyss) ─────────────── */
+  .depth-veil {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background:
+      radial-gradient(120% 90% at 50% 120%, rgba(10, 99, 214, 0.16), transparent 60%),
+      linear-gradient(180deg, transparent 30%, rgba(2, 6, 14, 0.55) 100%);
+    opacity: var(--depth, 0);
+    transition: opacity 0.3s linear;
+  }
 
   /* Scroll-reveal (driven by Reveal component adding .in) */
   .rv { opacity: 0; transform: translateY(26px); transition: opacity 0.9s var(--ease-expo), transform 0.9s var(--ease-expo); }

@@ -2,7 +2,7 @@ import { Nav } from "@/components/site/Nav";
 import { Footer } from "@/components/site/Footer";
 import { IntakeForm } from "@/components/hire/IntakeForm";
 
-export const metadata = { title: "Start a Project · Linework Studio" };
+export const metadata = { title: "Start a Project · Brain Loft Studios" };
 
 const STEPS = [
   ["Send the brief", "Dimensions, a sketch, a deadline — whatever you have."],

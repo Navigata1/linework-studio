@@ -2,9 +2,9 @@
 // and the tool registry that the hub and nav render from.
 
 export const STUDIO = {
-  name: process.env.NEXT_PUBLIC_STUDIO_NAME ?? "Linework Studio",
-  shortName: "Linework",
-  domain: process.env.NEXT_PUBLIC_STUDIO_DOMAIN ?? "jasminelineworks.com",
+  name: process.env.NEXT_PUBLIC_STUDIO_NAME ?? "Brain Loft Studios",
+  shortName: "Brain Loft",
+  domain: process.env.NEXT_PUBLIC_STUDIO_DOMAIN ?? "brainloftstudios.com",
   signature: "Drafted by JJ",
   principal: "Jasmine Johnson",
   role: "Civil Engineer · CAD Drafting · Field Inspection",

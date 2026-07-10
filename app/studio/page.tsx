@@ -2,7 +2,7 @@ import Link from "next/link";
 import { StudioShell } from "@/components/studio/StudioShell";
 import { STUDIO, TOOLS, ACCENT_VAR } from "@/lib/brand";
 
-export const metadata = { title: "Studio · Linework" };
+export const metadata = { title: "Studio · Brain Loft" };
 
 export default function StudioHome() {
   return (

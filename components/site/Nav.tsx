@@ -11,9 +11,9 @@ const LINKS = [
 
 export function Nav() {
   return (
-    <header className="sticky top-0 z-50 border-b border-[var(--color-line)] bg-[color-mix(in_oklab,var(--color-void)_82%,transparent)] backdrop-blur-md">
+    <header className="glass-toolbar backdrop-blur-2xl backdrop-saturate-150 sticky top-0 z-50">
       <div className="container-studio flex h-16 items-center justify-between">
-        <Link href="/" aria-label="Linework Studio home">
+        <Link href="/" aria-label="Brain Loft Studios home">
           <Wordmark />
         </Link>
         <nav aria-label="Primary" className="hidden items-center gap-1 md:flex">

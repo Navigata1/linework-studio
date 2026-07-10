@@ -2,23 +2,28 @@ import Link from "next/link";
 import { Nav } from "@/components/site/Nav";
 import { Footer } from "@/components/site/Footer";
 import { HeroPlan } from "@/components/site/HeroPlan";
+import { LiquidHero } from "@/components/site/LiquidHero";
+import { ScrollDepth } from "@/components/site/ScrollDepth";
 import { Marquee } from "@/components/site/Marquee";
 import { Manifesto } from "@/components/site/Manifesto";
 import { BeforeAfter } from "@/components/site/BeforeAfter";
 import { Reveal } from "@/components/site/Reveal";
-import { LineworkMark, DraftedMark } from "@/components/brand/Logo";
+import { LilyPad } from "@/components/ui/LilyPad";
+import { BrainLoftMark, DraftedMark } from "@/components/brand/Logo";
 import { STUDIO, TOOLS, SERVICES, ACCENT_VAR } from "@/lib/brand";
 
 export default function Home() {
   return (
-    <main className="grid-blueprint min-h-screen">
+    <main className="grid-blueprint relative min-h-screen">
+      <ScrollDepth />
       <Nav />
 
-      {/* ───────── HERO ───────── */}
+      {/* ───────── HERO — the surface of the water ───────── */}
       <section className="relative overflow-hidden border-b border-[var(--color-line)]">
+        <LiquidHero />
         <HeroPlan />
-        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,var(--color-void)_32%,transparent_70%)]" />
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_70%_20%,color-mix(in_oklab,var(--color-blue)_7%,transparent),transparent_60%)]" />
+        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,color-mix(in_oklab,var(--color-void)_88%,transparent)_28%,transparent_68%)]" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-[linear-gradient(180deg,transparent,var(--color-void))]" />
         <div className="container-studio relative py-28 md:py-40">
           <p className="eyebrow rise rise-1">{STUDIO.principal} · Civil Engineer · {STUDIO.region}</p>
           <h1 className="rise rise-2 mt-6 max-w-[15ch] text-[clamp(2.7rem,7.2vw,6.2rem)] leading-[0.98]">
@@ -76,26 +81,26 @@ export default function Home() {
               REQUEST A QUOTE →
             </Link>
           </div>
-          <div className="mt-10 grid gap-px overflow-hidden border border-[var(--color-line)] bg-[var(--color-line)] md:grid-cols-2">
+          <div className="mt-10 grid gap-6 md:grid-cols-2">
             {SERVICES.map((s, i) => (
-              <Link
-                key={s.no}
-                href="/hire"
-                className={`rv rv-d${(i % 4) + 1} group relative bg-[var(--color-panel)] p-8 transition-colors hover:bg-[var(--color-panel-2)]`}
-              >
-                <div className="flex items-baseline justify-between">
-                  <span className="idx text-[var(--color-amber)]">{s.no}</span>
-                  <span className="mono text-[11px] text-[var(--color-faint)]">{s.turnaround}</span>
-                </div>
-                <h3 className="mt-5 text-[22px] font-semibold transition-colors group-hover:text-[var(--color-amber-soft)]">{s.name}</h3>
-                <p className="mt-2 max-w-[52ch] text-[14px] leading-relaxed text-[var(--color-dim)]">{s.desc}</p>
-                <div className="mt-6 flex items-center justify-between">
-                  <span className="serif text-[17px] italic text-[var(--color-ink)]">{s.from}</span>
-                  <span className="mono text-[11px] font-semibold tracking-wide text-[var(--color-amber)] opacity-0 transition-opacity group-hover:opacity-100">
-                    START →
-                  </span>
-                </div>
-              </Link>
+              <div key={s.no} className={`rv rv-d${(i % 4) + 1}`}>
+                <LilyPad bobDelay={`${i * 1.7}s`}>
+                  <Link href="/hire" className="glass glass-spec backdrop-blur-2xl backdrop-saturate-150 group block p-8">
+                    <div className="flex items-baseline justify-between">
+                      <span className="idx text-[var(--color-amber)]">{s.no}</span>
+                      <span className="mono text-[11px] text-[var(--color-faint)]">{s.turnaround}</span>
+                    </div>
+                    <h3 className="mt-5 text-[22px] font-semibold transition-colors group-hover:text-[var(--color-amber-soft)]">{s.name}</h3>
+                    <p className="mt-2 max-w-[52ch] text-[14px] leading-relaxed text-[var(--color-dim)]">{s.desc}</p>
+                    <div className="mt-6 flex items-center justify-between">
+                      <span className="serif text-[17px] italic text-[var(--color-ink)]">{s.from}</span>
+                      <span className="mono text-[11px] font-semibold tracking-wide text-[var(--color-amber)] opacity-0 transition-opacity group-hover:opacity-100">
+                        START →
+                      </span>
+                    </div>
+                  </Link>
+                </LilyPad>
+              </div>
             ))}
           </div>
           <p className="rv mono mt-4 text-[11px] tracking-wide text-[var(--color-faint)]">
@@ -144,24 +149,26 @@ export default function Home() {
               OPEN STUDIO →
             </Link>
           </div>
-          <div className="mt-10 grid gap-5 md:grid-cols-3">
+          <div className="mt-10 grid gap-6 md:grid-cols-3">
             {TOOLS.map((t, i) => (
-              <Link
-                key={t.slug}
-                href={t.href}
-                className={`rv rv-d${i + 1} group relative flex flex-col overflow-hidden border border-[var(--color-line)] bg-[var(--color-panel)] p-7 transition-colors hover:border-[color-mix(in_oklab,var(--accent)_60%,var(--color-line))]`}
-                style={{ ["--accent" as string]: ACCENT_VAR[t.accent] }}
-              >
-                <div className="grid-fine pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                <div className="relative flex items-center justify-between">
-                  <span className="mono text-[11px] tracking-[0.18em]" style={{ color: ACCENT_VAR[t.accent] }}>{t.code}</span>
-                  <span className="mono text-[10px] uppercase tracking-[0.16em] text-[var(--color-faint)]">{String(i + 1).padStart(2, "0")} / 03</span>
-                </div>
-                <h3 className="relative mt-6 text-2xl font-semibold">{t.name}</h3>
-                <p className="relative mt-3 flex-1 text-[14px] leading-relaxed text-[var(--color-dim)]">{t.blurb}</p>
-                <span className="relative mt-6 mono text-[11px] font-semibold tracking-wide" style={{ color: ACCENT_VAR[t.accent] }}>OPEN →</span>
-                <span className="absolute bottom-0 left-0 h-[2px] w-0 transition-all duration-500 group-hover:w-full" style={{ background: ACCENT_VAR[t.accent] }} />
-              </Link>
+              <div key={t.slug} className={`rv rv-d${i + 1}`}>
+                <LilyPad bobDelay={`${i * 2.3}s`} maxTilt={7}>
+                  <Link
+                    href={t.href}
+                    className="glass glass-spec backdrop-blur-2xl backdrop-saturate-150 group flex h-full flex-col p-7"
+                    style={{ ["--accent" as string]: ACCENT_VAR[t.accent] }}
+                  >
+                    <div className="relative flex items-center justify-between">
+                      <span className="mono text-[11px] tracking-[0.18em]" style={{ color: ACCENT_VAR[t.accent] }}>{t.code}</span>
+                      <span className="mono text-[10px] uppercase tracking-[0.16em] text-[var(--color-faint)]">{String(i + 1).padStart(2, "0")} / 03</span>
+                    </div>
+                    <h3 className="relative mt-6 text-2xl font-semibold">{t.name}</h3>
+                    <p className="relative mt-3 flex-1 text-[14px] leading-relaxed text-[var(--color-dim)]">{t.blurb}</p>
+                    <span className="relative mt-6 mono text-[11px] font-semibold tracking-wide" style={{ color: ACCENT_VAR[t.accent] }}>OPEN →</span>
+                    <span className="absolute bottom-0 left-0 h-[2px] w-0 transition-all duration-500 group-hover:w-full" style={{ background: ACCENT_VAR[t.accent] }} />
+                  </Link>
+                </LilyPad>
+              </div>
             ))}
           </div>
         </Reveal>
@@ -198,33 +205,42 @@ export default function Home() {
           <h2 className="rv rv-d1 mt-3 text-[clamp(1.9rem,3.8vw,3rem)]">The name on the door.</h2>
           <p className="rv rv-d2 mt-4 max-w-[62ch] text-[var(--color-dim)]">
             <em className="serif italic text-[var(--color-ink)]">Inspired Design</em> is the ethos — Jasmine's own phrase, and the
-            soul of the studio. The marks below carry it: one as the studio's name, one as the
-            signature stamped into every title block.
+            soul of the studio. <strong className="font-semibold text-[var(--color-ink)]">Brain Loft Studios</strong> is
+            its name: the upstairs room where ideas are kept, turned over, and drawn true. The
+            signature below stamps every sheet that leaves it.
           </p>
-          <div className="mt-10 grid gap-5 md:grid-cols-2">
-            <div className="rv rv-d2 panel relative overflow-hidden p-8">
-              <span className="absolute right-5 top-5 mono text-[10px] tracking-wide text-[var(--color-good)]">✓ AVAILABLE · $11.25/YR</span>
-              <LineworkMark size={52} />
-              <h3 className="mt-5 font-[family-name:var(--font-display)] text-2xl font-bold">
-                Linework<span className="text-[var(--color-blue)]"> Studio</span>
-              </h3>
-              <p className="mono mt-1 text-[12px] text-[var(--color-dim)]">jasminelineworks.com</p>
-              <p className="mt-4 text-[14px] leading-relaxed text-[var(--color-dim)]">
-                "Linework" is the drafter's own word for the lines that make a drawing — her name and
-                her craft in one term. The studio's public name; the vessel the ethos travels in.
-              </p>
+          <div className="mt-10 grid gap-6 md:grid-cols-2">
+            <div className="rv rv-d2">
+              <LilyPad bobDelay="0.8s" maxTilt={6}>
+                <div className="glass glass-spec backdrop-blur-2xl backdrop-saturate-150 relative p-8">
+                  <span className="absolute right-5 top-5 mono text-[10px] tracking-wide text-[var(--color-good)]">✓ AVAILABLE · $11.25/YR</span>
+                  <BrainLoftMark size={52} />
+                  <h3 className="mt-5 font-[family-name:var(--font-display)] text-2xl font-bold">
+                    Brain<span className="text-[var(--color-blue)]">Loft</span> Studios
+                  </h3>
+                  <p className="mono mt-1 text-[12px] text-[var(--color-dim)]">brainloftstudios.com</p>
+                  <p className="mt-4 text-[14px] leading-relaxed text-[var(--color-dim)]">
+                    The loft is where a drafter keeps the good ideas — up a ladder, above the noise.
+                    Jasmine's pick, and the roof over all three instruments of the studio.
+                  </p>
+                </div>
+              </LilyPad>
             </div>
-            <div className="rv rv-d3 panel relative overflow-hidden p-8">
-              <span className="absolute right-5 top-5 mono text-[10px] tracking-wide text-[var(--color-good)]">✓ AVAILABLE · $11.25/YR</span>
-              <DraftedMark size={52} />
-              <h3 className="mt-5 font-[family-name:var(--font-display)] text-2xl font-bold">
-                drafted<span className="text-[var(--color-amber)]">by</span>jj
-              </h3>
-              <p className="mono mt-1 text-[12px] text-[var(--color-dim)]">draftedbyjj.com</p>
-              <p className="mt-4 text-[14px] leading-relaxed text-[var(--color-dim)]">
-                The signature. Warm, personal, memorable — stamped in the corner of every sheet the
-                studio ships, the way a hand signs finished work.
-              </p>
+            <div className="rv rv-d3">
+              <LilyPad bobDelay="2.6s" maxTilt={6}>
+                <div className="glass glass-spec backdrop-blur-2xl backdrop-saturate-150 relative p-8">
+                  <span className="absolute right-5 top-5 mono text-[10px] tracking-wide text-[var(--color-good)]">✓ AVAILABLE · $11.25/YR</span>
+                  <DraftedMark size={52} />
+                  <h3 className="mt-5 font-[family-name:var(--font-display)] text-2xl font-bold">
+                    drafted<span className="text-[var(--color-amber)]">by</span>jj
+                  </h3>
+                  <p className="mono mt-1 text-[12px] text-[var(--color-dim)]">draftedbyjj.com</p>
+                  <p className="mt-4 text-[14px] leading-relaxed text-[var(--color-dim)]">
+                    The signature. Warm, personal, memorable — stamped in the corner of every sheet the
+                    studio ships, the way a hand signs finished work.
+                  </p>
+                </div>
+              </LilyPad>
             </div>
           </div>
         </Reveal>

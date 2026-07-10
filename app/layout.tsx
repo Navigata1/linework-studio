@@ -8,12 +8,12 @@ const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono", displ
 const serif = Fraunces({ subsets: ["latin"], variable: "--font-serif", display: "swap", style: ["normal", "italic"], weight: ["400", "500", "600"] });
 
 export const metadata: Metadata = {
-  title: "Linework Studio — Inspired design, drafted true · Jasmine Johnson, CE",
+  title: "Brain Loft Studios — Inspired design, drafted true · Jasmine Johnson, CE",
   description:
     "A Southern California CAD & inspection studio. Sketches become drawings, site photos become reports, addresses become dossiers — inspired design, drafted true.",
-  metadataBase: new URL("https://jasminelineworks.com"),
+  metadataBase: new URL("https://brainloftstudios.com"),
   openGraph: {
-    title: "Linework Studio — Inspired design, drafted true",
+    title: "Brain Loft Studios — Inspired design, drafted true",
     description: "CAD drafting, site inspection reports, and instant parcel research — one studio for Jasmine Johnson, CE.",
     type: "website",
   },

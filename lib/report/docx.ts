@@ -173,7 +173,7 @@ export async function buildReportDocx(payload: ReportPayload): Promise<Uint8Arra
   }
 
   const doc = new Document({
-    creator: "Linework Studio",
+    creator: "Brain Loft Studios",
     title: `Daily Report ${meta.reportNo || ""} — ${meta.contractNo}`,
     styles: {
       default: { document: { run: { font: "Calibri" } } },
