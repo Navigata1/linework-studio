@@ -19,7 +19,19 @@ export default function StudioHome() {
           </div>
         </div>
 
-        <div className="mt-10 grid gap-5 lg:grid-cols-3">
+        <Link
+          href="/studio/requests"
+          className="group mt-10 flex flex-wrap items-center justify-between gap-3 border border-[var(--color-line)] bg-[var(--color-carbon)] px-7 py-5 transition-colors hover:border-[var(--color-amber)]"
+        >
+          <div className="flex items-center gap-4">
+            <span className="mono text-[11px] tracking-[0.18em] text-[var(--color-amber)]">INBOX</span>
+            <span className="font-semibold">Client requests</span>
+            <span className="hidden text-[13px] text-[var(--color-dim)] sm:block">every /hire submission, structured and quotable</span>
+          </div>
+          <span className="mono text-[11px] font-semibold tracking-wide text-[var(--color-amber)]">OPEN →</span>
+        </Link>
+
+        <div className="mt-5 grid gap-5 lg:grid-cols-3">
           {TOOLS.map((t) => (
             <Link
               key={t.slug}

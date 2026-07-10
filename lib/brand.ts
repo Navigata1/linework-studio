@@ -9,9 +9,64 @@ export const STUDIO = {
   principal: "Jasmine Johnson",
   role: "Civil Engineer · CAD Drafting · Field Inspection",
   region: "Southern California",
-  tagline: "Field to finish. Every line accounted for.",
+  tagline: "Inspired design, drafted true.",
+  ethos: "Inspired Design",
   crew: "Island Development Crew",
 } as const;
+
+// The name candidates live on as the brand's vocabulary — the texture of the
+// marquee, section labels, and title blocks.
+export const DRAFTING_TERMS = [
+  "linework",
+  "datum",
+  "plumb line",
+  "field-to-finish",
+  "meridian",
+  "as-built",
+  "title block",
+  "benchmark",
+  "section cut",
+  "drafted by JJ",
+] as const;
+
+export type Service = {
+  no: string;
+  name: string;
+  desc: string;
+  turnaround: string;
+  from: string;
+};
+
+export const SERVICES: Service[] = [
+  {
+    no: "S-01",
+    name: "Floor plan from sketch",
+    desc: "Napkin sketch, photo, or field notes become a clean, dimensioned, permit-ready floor plan.",
+    turnaround: "3–5 days",
+    from: "from $250",
+  },
+  {
+    no: "S-02",
+    name: "As-built drawing",
+    desc: "Existing conditions documented into accurate as-built plans — measured, layered, plottable.",
+    turnaround: "5–7 days",
+    from: "from $400",
+  },
+  {
+    no: "S-03",
+    name: "Site plan / exhibit",
+    desc: "Parcel, setbacks, easements, and improvements composed into a submission-ready site exhibit.",
+    turnaround: "3–5 days",
+    from: "from $350",
+  },
+  {
+    no: "S-04",
+    name: "PDF → DWG conversion",
+    desc: "Flat PDFs and scans rebuilt as native, editable AutoCAD files with true layers and lineweights.",
+    turnaround: "2–4 days",
+    from: "from $150",
+  },
+];
 
 export type Tool = {
   slug: string;

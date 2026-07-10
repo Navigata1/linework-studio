@@ -2,8 +2,9 @@ import Link from "next/link";
 import { Wordmark } from "@/components/brand/Logo";
 
 const LINKS = [
-  { href: "/#work", label: "Work" },
-  { href: "/#tools", label: "The Studio" },
+  { href: "/#ethos", label: "Ethos" },
+  { href: "/#services", label: "Services" },
+  { href: "/#work", label: "The Craft" },
   { href: "/studio", label: "Enter Studio" },
   { href: "/hire", label: "Start a Project" },
 ];

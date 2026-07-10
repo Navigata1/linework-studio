@@ -12,6 +12,17 @@ export function StudioShell({ children, active }: { children: React.ReactNode; a
             <Wordmark />
           </Link>
           <div className="flex items-center gap-1">
+            <Link
+              key="requests"
+              href="/studio/requests"
+              className="mono rounded-sm px-3 py-2 text-[11.5px] tracking-wide transition-colors"
+              style={{
+                color: active === "requests" ? "var(--color-amber)" : "var(--color-dim)",
+                background: active === "requests" ? "var(--color-panel-2)" : "transparent",
+              }}
+            >
+              Requests
+            </Link>
             {TOOLS.map((t) => (
               <Link
                 key={t.slug}

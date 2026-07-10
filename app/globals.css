@@ -23,7 +23,14 @@
   --color-faint: #5c6a82;
   --color-good: #38d39a;
 
+  --color-paper: #f3efe6;
+  --color-paper-2: #eae4d6;
+  --color-paper-line: #cfc7b4;
+  --color-paper-ink: #1d2433;
+  --color-paper-dim: #5a6070;
+
   --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Fraunces", Georgia, serif;
   --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", monospace;
 
@@ -103,4 +110,39 @@
 
   .container-studio { width: 100%; max-width: 1180px; margin-inline: auto; padding-inline: 24px; }
   .hairline { height: 1px; background: linear-gradient(90deg, transparent, var(--color-line-2), transparent); }
+
+  .serif { font-family: var(--font-serif); }
+
+  /* Scroll-reveal (driven by Reveal component adding .in) */
+  .rv { opacity: 0; transform: translateY(26px); transition: opacity 0.9s var(--ease-expo), transform 0.9s var(--ease-expo); }
+  .rv.in { opacity: 1; transform: none; }
+  .rv-d1 { transition-delay: 0.08s; } .rv-d2 { transition-delay: 0.16s; }
+  .rv-d3 { transition-delay: 0.24s; } .rv-d4 { transition-delay: 0.32s; }
+  @media (prefers-reduced-motion: reduce) { .rv { opacity: 1; transform: none; } }
+
+  /* Drafting-terms marquee */
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  .marquee-track { display: flex; width: max-content; animation: marquee 46s linear infinite; }
+  .marquee:hover .marquee-track { animation-play-state: paused; }
+  @media (prefers-reduced-motion: reduce) { .marquee-track { animation: none; } }
+
+  /* Vellum drawing-sheet section */
+  .vellum {
+    background: var(--color-paper);
+    color: var(--color-paper-ink);
+    background-image:
+      linear-gradient(color-mix(in oklab, var(--color-paper-line) 34%, transparent) 1px, transparent 1px),
+      linear-gradient(90deg, color-mix(in oklab, var(--color-paper-line) 34%, transparent) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+  .vellum .eyebrow { color: var(--color-blue-deep); }
+
+  /* Big editorial numerals */
+  .idx { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.2em; }
+
+  /* Underline sweep for links */
+  .sweep { position: relative; }
+  .sweep::after { content: ""; position: absolute; left: 0; bottom: -3px; height: 1px; width: 100%;
+    background: currentColor; transform: scaleX(0); transform-origin: right; transition: transform 0.4s var(--ease-expo); }
+  .sweep:hover::after { transform: scaleX(1); transform-origin: left; }
 }
