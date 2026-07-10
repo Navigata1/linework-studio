@@ -10,7 +10,7 @@ const serif = Fraunces({ subsets: ["latin"], variable: "--font-serif", display: 
 export const metadata: Metadata = {
   title: "Brain Loft Studios — Inspired design, drafted true · Jasmine Johnson, CE",
   description:
-    "A Southern California CAD & inspection studio. Sketches become drawings, site photos become reports, addresses become dossiers — inspired design, drafted true.",
+    "A California CAD & inspection studio — Northern California field, Southern California roots. Sketches become drawings, site photos become reports, addresses become dossiers — inspired design, drafted true.",
   metadataBase: new URL("https://brainloftstudios.com"),
   openGraph: {
     title: "Brain Loft Studios — Inspired design, drafted true",

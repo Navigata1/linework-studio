@@ -4,6 +4,9 @@ import { Footer } from "@/components/site/Footer";
 import { HeroPlan } from "@/components/site/HeroPlan";
 import { LiquidHero } from "@/components/site/LiquidHero";
 import { ScrollDepth } from "@/components/site/ScrollDepth";
+import { FluidBackground } from "@/components/site/FluidBackground";
+import { PlumbSpine } from "@/components/site/PlumbSpine";
+import { Wave } from "@/components/site/Wave";
 import { Marquee } from "@/components/site/Marquee";
 import { Manifesto } from "@/components/site/Manifesto";
 import { BeforeAfter } from "@/components/site/BeforeAfter";
@@ -12,27 +15,40 @@ import { LilyPad } from "@/components/ui/LilyPad";
 import { BrainLoftMark, DraftedMark } from "@/components/brand/Logo";
 import { STUDIO, TOOLS, SERVICES, ACCENT_VAR } from "@/lib/brand";
 
+const STATIONS = [
+  { id: "top", label: "00 · Surface" },
+  { id: "ethos", label: "01 · Ethos" },
+  { id: "services", label: "02 · Services" },
+  { id: "work", label: "03 · The Craft" },
+  { id: "tools", label: "04 · Studio" },
+  { id: "process", label: "05 · Process" },
+  { id: "brand", label: "06 · Identity" },
+];
+
 export default function Home() {
   return (
-    <main className="grid-blueprint relative min-h-screen">
+    <main className="relative min-h-screen">
       <ScrollDepth />
+      <FluidBackground />
+      <PlumbSpine stations={STATIONS} />
+      <div className="grid-blueprint relative z-10">
       <Nav />
 
       {/* ───────── HERO — the surface of the water ───────── */}
-      <section className="relative overflow-hidden border-b border-[var(--color-line)]">
+      <section id="top" className="relative flex min-h-[100svh] items-center overflow-hidden border-b border-[var(--color-line)]">
         <LiquidHero />
         <HeroPlan />
-        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,color-mix(in_oklab,var(--color-void)_88%,transparent)_28%,transparent_68%)]" />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-[linear-gradient(180deg,transparent,var(--color-void))]" />
-        <div className="container-studio relative py-28 md:py-40">
-          <p className="eyebrow rise rise-1">{STUDIO.principal} · Civil Engineer · {STUDIO.region}</p>
+        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,color-mix(in_oklab,var(--color-void)_78%,transparent)_26%,transparent_70%)]" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-[linear-gradient(180deg,transparent,color-mix(in_oklab,var(--color-void)_70%,transparent))]" />
+        <div className="container-studio relative w-full py-24 md:py-28">
+          <p className="eyebrow rise rise-1">{STUDIO.principal} · Civil Engineer · {STUDIO.regionLine}</p>
           <h1 className="rise rise-2 mt-6 max-w-[15ch] text-[clamp(2.7rem,7.2vw,6.2rem)] leading-[0.98]">
             <span className="serif font-medium italic text-[var(--color-amber-soft)]">Inspired</span> design,
             <br />
             drafted <span className="text-[var(--color-blue)] text-glow">true</span>.
           </h1>
           <p className="rise rise-3 mt-7 max-w-[50ch] text-[clamp(1rem,1.4vw,1.2rem)] text-[var(--color-dim)]">
-            A Southern California CAD &amp; inspection studio — and the operating system that runs it.
+            A California CAD &amp; inspection studio — NorCal field, SoCal roots — and the operating system that runs it.
             Sketches become drawings. Site photos become reports. Addresses become dossiers.
           </p>
           <div className="rise rise-4 mt-10 flex flex-wrap items-center gap-4">
@@ -66,8 +82,10 @@ export default function Home() {
 
       <Marquee />
 
-      {/* ───────── MANIFESTO (vellum sheet) ───────── */}
+      {/* ───────── MANIFESTO — break the surface into the drawing sheet ───────── */}
+      <Wave fill="var(--color-paper)" />
       <Manifesto />
+      <Wave fill="var(--color-paper)" flip />
 
       {/* ───────── SERVICES ───────── */}
       <section id="services" className="border-b border-[var(--color-line)] py-24 md:py-28">
@@ -268,6 +286,7 @@ export default function Home() {
       </section>
 
       <Footer />
+      </div>
     </main>
   );
 }

@@ -1,7 +1,7 @@
 // Site Dossier assembly. Combines deterministic county record sources (always
 // works) with an optional AI research synthesis and optional parcel API data.
 import { CA_COUNTIES, FEMA_FLOOD, countyByName, type CountySource } from "./counties";
-import { askClaude, hasAI } from "./anthropic";
+import { askText, hasAI } from "./ai";
 
 export type DossierInput = { address?: string; apn?: string; county?: string };
 
@@ -27,7 +27,7 @@ function guessCounty(input: DossierInput): CountySource | undefined {
 }
 
 const AI_SYSTEM =
-  "You are a civil engineering research assistant preparing a site dossier for a CAD/inspection project in Southern California. " +
+  "You are a civil engineering research assistant preparing a site dossier for a CAD/inspection project in California — typically Northern California (Sacramento region and the Bay Area), sometimes Southern California. " +
   "Given an address or APN, summarize what a drafter should know before starting: likely jurisdiction, what parcel/zoning/flood records to pull and from where, and any research cautions. " +
   "Be concrete and brief (5-7 bullet points). Never fabricate specific parcel numbers, owners, or dimensions — flag those as 'verify from source'.";
 
@@ -71,7 +71,7 @@ export async function buildDossier(input: DossierInput): Promise<Dossier> {
   let aiSummary: string | null = null;
   if (hasAI()) {
     const prompt = `Address: ${input.address || "(none)"}\nAPN: ${input.apn || "(none)"}\nLikely county: ${county?.county ?? "unknown"}\nPrepare the research brief.`;
-    aiSummary = await askClaude(AI_SYSTEM, prompt, 600);
+    aiSummary = await askText(AI_SYSTEM, prompt, 600);
   }
 
   return {

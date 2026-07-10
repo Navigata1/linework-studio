@@ -60,7 +60,7 @@ export function DossierForm() {
       <section className="h-fit border border-[var(--color-line)] bg-[var(--color-panel)] p-6 lg:sticky lg:top-24">
         <h2 className="text-lg font-semibold">Lookup</h2>
         <div className="mt-5 space-y-3">
-          <Field label="Site Address" value={address} onChange={(e) => setAddress(e.target.value)} placeholder="1200 Main St, Riverside, CA" />
+          <Field label="Site Address" value={address} onChange={(e) => setAddress(e.target.value)} placeholder="1200 J St, Sacramento, CA" />
           <Field label="APN (optional)" value={apn} onChange={(e) => setApn(e.target.value)} placeholder="123-456-789" />
           <label className="block">
             <Label>County (optional)</Label>
