@@ -1,7 +1,7 @@
 import { StudioShell } from "@/components/studio/StudioShell";
 import { DropZone } from "@/components/report/DropZone";
 
-export const metadata = { title: "Report Engine · Brain Loft Studios" };
+export const metadata = { title: "Report Engine · Linework Studios" };
 
 export default function ReportPage() {
   return (

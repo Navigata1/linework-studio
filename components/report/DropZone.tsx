@@ -61,18 +61,25 @@ export function DropZone() {
       setPhotos((p) => [...p, ...entries]);
 
       // Draft descriptions with AI (graceful fallback server-side).
-      setBusy("Drafting descriptions…");
-      try {
-        const res = await fetch("/api/describe", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ images: entries.map((e) => ({ id: e.id, dataUrl: e.dataUrl, hint: e.fileName })) }),
-        });
-        const json = await res.json();
-        setAiOn(Boolean(json.ai));
-        setPhotos((p) => p.map((ph) => (json.descriptions?.[ph.id] ? { ...ph, description: json.descriptions[ph.id] } : ph)));
-      } catch {
-        setAiOn(false);
+      // Small thumbnails + chunked requests keep every call well under
+      // serverless body limits, no matter how many photos the day produced.
+      const thumbs = await Promise.all(imgs.map((f) => downscaleToDataUrl(f, 900, 0.7)));
+      const CHUNK = 3;
+      for (let i = 0; i < entries.length; i += CHUNK) {
+        setBusy(`Drafting descriptions… ${Math.min(i + CHUNK, entries.length)}/${entries.length}`);
+        const slice = entries.slice(i, i + CHUNK).map((e, j) => ({ id: e.id, dataUrl: thumbs[i + j], hint: e.fileName }));
+        try {
+          const res = await fetch("/api/describe", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ images: slice }),
+          });
+          const json = await res.json();
+          setAiOn(Boolean(json.ai));
+          setPhotos((p) => p.map((ph) => (json.descriptions?.[ph.id] ? { ...ph, description: json.descriptions[ph.id] } : ph)));
+        } catch {
+          setAiOn(false);
+        }
       }
       setBusy(null);
     },
@@ -94,24 +101,43 @@ export function DropZone() {
     setLog((l) => l.map((e, idx) => (idx === i ? { ...e, ...patch } : e)));
   const removeLog = (i: number) => setLog((l) => l.filter((_, idx) => idx !== i));
 
+  const download = (blob: Blob) => {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `Daily_Report_${meta.reportNo || "DRAFT"}_${meta.contractNo}.docx`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
   const generate = async () => {
     setBusy("Assembling Word document…");
     try {
-      const res = await fetch("/api/report", {
+      // Build the .docx right here in the browser — a full day of photos is
+      // far larger than serverless request limits allow, and it never needs
+      // to leave this device to become a Word file.
+      const { buildReportDocx } = await import("@/lib/report/docx");
+      const blob = await buildReportDocx({ meta, log, photos });
+      download(blob);
+      // Record report metadata only (tiny payload, photos never sent).
+      fetch("/api/report", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ meta, log, photos }),
-      });
-      if (!res.ok) throw new Error("gen");
-      const blob = await res.blob();
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `Daily_Report_${meta.reportNo || "DRAFT"}_${meta.contractNo}.docx`;
-      a.click();
-      URL.revokeObjectURL(url);
+        body: JSON.stringify({ meta, log, photos: [], photoCount: photos.length, logOnly: true }),
+      }).catch(() => {});
     } catch {
-      alert("Could not generate the report. Please try again.");
+      // Fallback: legacy server-side generation (small photo sets only).
+      try {
+        const res = await fetch("/api/report", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ meta, log, photos }),
+        });
+        if (!res.ok) throw new Error("gen");
+        download(await res.blob());
+      } catch {
+        alert("Could not generate the report on this device. Try removing a photo or refreshing — and send Jon a note so he can take a look.");
+      }
     }
     setBusy(null);
   };

@@ -3,7 +3,7 @@ import { Footer } from "@/components/site/Footer";
 import { SmoothScroll } from "@/components/site/SmoothScroll";
 import { IntakeForm } from "@/components/hire/IntakeForm";
 
-export const metadata = { title: "Start a Project · Brain Loft Studios" };
+export const metadata = { title: "Start a Project · Linework Studios" };
 
 const STEPS = [
   ["Send the brief", "Dimensions, a sketch, a deadline — whatever you have."],
@@ -11,10 +11,27 @@ const STEPS = [
   ["Receive drawings", "Editable, professional CAD deliverables — drafted by JJ."],
 ];
 
-export default function HirePage() {
+export default async function HirePage({
+  searchParams,
+}: {
+  searchParams?: Promise<{ preview?: string }>;
+}) {
+  const preview = (await searchParams)?.preview === "1";
   return (
     <main className="grid-blueprint min-h-screen">
       <SmoothScroll />
+      {preview && (
+        <div className="sticky top-0 z-[60] border-b border-[var(--color-amber)] bg-[color-mix(in_oklab,var(--color-amber)_14%,var(--color-void))]">
+          <div className="container-studio flex flex-wrap items-center justify-between gap-2 py-2.5">
+            <span className="mono text-[11px] font-semibold tracking-wide text-[var(--color-amber)]">
+              CLIENT VIEW — this page is your public storefront, exactly what customers see.
+            </span>
+            <span className="mono text-[11px] tracking-wide text-[var(--color-dim)]">
+              Their submissions land in <a href="/studio/requests" className="text-[var(--color-amber)] underline">Studio → Requests</a>
+            </span>
+          </div>
+        </div>
+      )}
       <Nav />
       <section className="border-b border-[var(--color-line)]">
         <div className="container-studio grid gap-12 py-16 lg:grid-cols-[1fr_1.3fr]">

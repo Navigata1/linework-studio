@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Nav } from "@/components/site/Nav";
 import { Footer } from "@/components/site/Footer";
 
-export const metadata = { title: "Request received · Brain Loft Studios" };
+export const metadata = { title: "Request received · Linework Studios" };
 
 export default function ThanksPage() {
   return (

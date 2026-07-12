@@ -11,7 +11,7 @@ import { Manifesto } from "@/components/site/Manifesto";
 import { BeforeAfter } from "@/components/site/BeforeAfter";
 import { Reveal } from "@/components/site/Reveal";
 import { LilyPad } from "@/components/ui/LilyPad";
-import { BrainLoftMark, DraftedMark } from "@/components/brand/Logo";
+import { LineworkMark, DraftedMark } from "@/components/brand/Logo";
 import { STUDIO, TOOLS, SERVICES, ACCENT_VAR } from "@/lib/brand";
 
 const STATIONS = [
@@ -122,7 +122,8 @@ export default function Home() {
             ))}
           </div>
           <p className="rv mono mt-4 text-[11px] tracking-wide text-[var(--color-faint)]">
-            PRICING SHOWN AS STARTING BANDS · EVERY JOB QUOTED EXACTLY BEFORE WORK BEGINS
+            PRICING SHOWN AS STARTING BANDS · EVERY PROJECT BEGINS WITH A QUICK CONSULT · TURNAROUND CLOCKS START ONCE
+            REQUIRED INPUTS (MEASUREMENTS, SURVEY DATA, SKETCHES) ARE IN HAND
           </p>
         </Reveal>
       </section>
@@ -168,7 +169,7 @@ export default function Home() {
             </Link>
           </div>
           <div className="mt-10 grid gap-6 md:grid-cols-3">
-            {TOOLS.map((t, i) => (
+            {TOOLS.filter((t) => t.public).map((t, i) => (
               <div key={t.slug} className={`rv rv-d${i + 1}`}>
                 <LilyPad bobDelay={`${i * 2.3}s`} maxTilt={7}>
                   <Link
@@ -223,23 +224,23 @@ export default function Home() {
           <h2 className="rv rv-d1 mt-3 text-[clamp(1.9rem,3.8vw,3rem)]">The name on the door.</h2>
           <p className="rv rv-d2 mt-4 max-w-[62ch] text-[var(--color-dim)]">
             <em className="serif italic text-[var(--color-ink)]">Inspired Design</em> is the ethos — Jasmine's own phrase, and the
-            soul of the studio. <strong className="font-semibold text-[var(--color-ink)]">Brain Loft Studios</strong> is
-            its name: the upstairs room where ideas are kept, turned over, and drawn true. The
-            signature below stamps every sheet that leaves it.
+            soul of the studio. <strong className="font-semibold text-[var(--color-ink)]">Linework Studios</strong> is
+            its name: linework is the drafter's own word for the lines of a drawing — the name is
+            the craft itself. The signature below stamps every sheet that leaves it.
           </p>
           <div className="mt-10 grid gap-6 md:grid-cols-2">
             <div className="rv rv-d2">
               <LilyPad bobDelay="0.8s" maxTilt={6}>
                 <div className="glass glass-spec backdrop-blur-2xl backdrop-saturate-150 relative p-8">
                   <span className="absolute right-5 top-5 mono text-[10px] tracking-wide text-[var(--color-good)]">✓ AVAILABLE · $11.25/YR</span>
-                  <BrainLoftMark size={52} />
+                  <LineworkMark size={52} />
                   <h3 className="mt-5 font-[family-name:var(--font-display)] text-2xl font-bold">
-                    Brain<span className="text-[var(--color-blue)]">Loft</span> Studios
+                    Line<span className="text-[var(--color-blue)]">work</span> Studios
                   </h3>
-                  <p className="mono mt-1 text-[12px] text-[var(--color-dim)]">brainloftstudios.com</p>
+                  <p className="mono mt-1 text-[12px] text-[var(--color-dim)]">jasminelineworks.com</p>
                   <p className="mt-4 text-[14px] leading-relaxed text-[var(--color-dim)]">
-                    The loft is where a drafter keeps the good ideas — up a ladder, above the noise.
-                    Jasmine's pick, and the roof over all three instruments of the studio.
+                    Every drawing is made of linework — weight, precision, intent. Jasmine's pick,
+                    and the name over the door of all three instruments of the studio.
                   </p>
                 </div>
               </LilyPad>

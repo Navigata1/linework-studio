@@ -71,10 +71,10 @@ export function Wordmark({
   }
   return (
     <span className={`inline-flex items-center gap-2.5 ${className}`}>
-      <BrainLoftMark />
+      <LineworkMark />
       <span className="leading-none">
         <span className="font-[family-name:var(--font-display)] text-[17px] font-bold tracking-tight">
-          Brain<span className="text-[var(--color-blue)]">Loft</span>
+          Line<span className="text-[var(--color-blue)]">work</span>
           <span className="ml-1.5 font-normal text-[var(--color-dim)]">Studios</span>
         </span>
       </span>

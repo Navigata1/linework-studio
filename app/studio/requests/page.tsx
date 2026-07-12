@@ -1,7 +1,7 @@
 import { StudioShell } from "@/components/studio/StudioShell";
 import { hasSupabase, serverClient } from "@/lib/supabase";
 
-export const metadata = { title: "Requests · Brain Loft Studios" };
+export const metadata = { title: "Requests · Linework Studios" };
 export const dynamic = "force-dynamic";
 
 type Intake = {

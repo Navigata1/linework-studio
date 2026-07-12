@@ -8,8 +8,28 @@ export const maxDuration = 60;
 
 export async function POST(req: Request) {
   try {
-    const payload = (await req.json()) as ReportPayload;
+    const payload = (await req.json()) as ReportPayload & { logOnly?: boolean; photoCount?: number };
     if (!payload?.meta) return NextResponse.json({ error: "missing_meta" }, { status: 400 });
+
+    // logOnly: the docx was generated client-side (no 4.5MB body ceiling) —
+    // this call only records report metadata. Photos are never sent.
+    if (payload.logOnly) {
+      if (hasSupabase()) {
+        try {
+          const sb = serverClient();
+          await sb?.from("reports").insert({
+            contract_no: payload.meta.contractNo,
+            report_no: payload.meta.reportNo,
+            report_date: payload.meta.date || null,
+            inspector: payload.meta.inspector,
+            photo_count: payload.photoCount ?? 0,
+          });
+        } catch {
+          /* non-fatal */
+        }
+      }
+      return NextResponse.json({ ok: true });
+    }
 
     const bytes = await buildReportDocx(payload);
 

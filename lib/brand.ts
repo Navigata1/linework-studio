@@ -2,9 +2,9 @@
 // and the tool registry that the hub and nav render from.
 
 export const STUDIO = {
-  name: process.env.NEXT_PUBLIC_STUDIO_NAME ?? "Brain Loft Studios",
-  shortName: "Brain Loft",
-  domain: process.env.NEXT_PUBLIC_STUDIO_DOMAIN ?? "brainloftstudios.com",
+  name: process.env.NEXT_PUBLIC_STUDIO_NAME ?? "Linework Studios",
+  shortName: "Linework",
+  domain: process.env.NEXT_PUBLIC_STUDIO_DOMAIN ?? "jasminelineworks.com",
   signature: "Drafted by JJ",
   principal: "Jasmine Johnson",
   role: "Civil Engineer · CAD Drafting · Field Inspection",
@@ -49,8 +49,8 @@ export const SERVICES: Service[] = [
   {
     no: "S-02",
     name: "As-built drawing",
-    desc: "Existing conditions documented into accurate as-built plans — measured, layered, plottable.",
-    turnaround: "5–7 days",
+    desc: "Existing conditions drawn into accurate as-built plans — built from your survey data or detailed field measurements (a site visit can be arranged).",
+    turnaround: "5–7 days once measurements are received",
     from: "from $400",
   },
   {
@@ -77,6 +77,8 @@ export type Tool = {
   href: string;
   accent: "blue" | "amber" | "cyan";
   status: "live" | "beta";
+  /** Shown on the public homepage? Internal instruments stay inside /studio. */
+  public: boolean;
 };
 
 export const TOOLS: Tool[] = [
@@ -89,6 +91,7 @@ export const TOOLS: Tool[] = [
     href: "/studio/report",
     accent: "blue",
     status: "live",
+    public: false,
   },
   {
     slug: "dossier",
@@ -99,6 +102,7 @@ export const TOOLS: Tool[] = [
     href: "/studio/dossier",
     accent: "cyan",
     status: "live",
+    public: false,
   },
   {
     slug: "storefront",
@@ -109,6 +113,7 @@ export const TOOLS: Tool[] = [
     href: "/hire",
     accent: "amber",
     status: "live",
+    public: true,
   },
 ];
 

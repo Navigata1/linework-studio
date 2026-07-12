@@ -2,7 +2,7 @@ import Link from "next/link";
 import { StudioShell } from "@/components/studio/StudioShell";
 import { STUDIO, TOOLS, ACCENT_VAR } from "@/lib/brand";
 
-export const metadata = { title: "Studio · Brain Loft" };
+export const metadata = { title: "Studio · Linework" };
 
 export default function StudioHome() {
   return (
@@ -35,7 +35,7 @@ export default function StudioHome() {
           {TOOLS.map((t) => (
             <Link
               key={t.slug}
-              href={t.href}
+              href={t.slug === "storefront" ? "/hire?preview=1" : t.href}
               className="group relative overflow-hidden border border-[var(--color-line)] bg-[var(--color-panel)] p-8 transition-transform hover:-translate-y-1"
               style={{ ["--accent" as string]: ACCENT_VAR[t.accent] }}
             >

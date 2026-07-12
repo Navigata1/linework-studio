@@ -27,7 +27,7 @@ function SketchSide() {
       <g stroke="#7a7466" strokeWidth="1.4" opacity="0.7">
         <path d="M300 262 L 420 262 M300 256 L300 268 M420 256 L420 268" />
       </g>
-      <text x="30" y="322" fill="#8a8474" fontFamily="cursive" fontSize="15" transform="rotate(-1 30 322)">measured after church, double check!</text>
+      <text x="30" y="322" fill="#8a8474" fontFamily="cursive" fontSize="15" transform="rotate(-1 30 322)">field-measured — verify dims on site!</text>
     </svg>
   );
 }

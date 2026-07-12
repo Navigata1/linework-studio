@@ -26,7 +26,7 @@ export function StudioShell({ children, active }: { children: React.ReactNode; a
             {TOOLS.map((t) => (
               <Link
                 key={t.slug}
-                href={t.href}
+                href={t.slug === "storefront" ? "/hire?preview=1" : t.href}
                 className="mono rounded-sm px-3 py-2 text-[11.5px] tracking-wide transition-colors"
                 style={{
                   color: active === t.slug ? ACCENT_VAR[t.accent] : "var(--color-dim)",

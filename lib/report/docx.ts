@@ -17,6 +17,19 @@ import {
 } from "docx";
 import type { ReportPayload, ReportMeta, PhotoEntry } from "./types";
 
+// Runs in BOTH the browser (client-side generation — no serverless body limits)
+// and Node (legacy /api/report fallback). Never reference Buffer directly.
+function b64ToBytes(b64: string): Uint8Array {
+  if (typeof atob === "function") {
+    const bin = atob(b64);
+    const out = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
+    return out;
+  }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return Uint8Array.from((globalThis as any).Buffer.from(b64, "base64"));
+}
+
 const INK = "1B2536";
 const BLUE = "0A63D6";
 const DIM = "5C6A82";
@@ -24,7 +37,7 @@ const DIM = "5C6A82";
 function dataUrlToBytes(dataUrl: string): { bytes: Uint8Array; ext: "png" | "jpg" } {
   const match = /^data:image\/(png|jpe?g);base64,(.*)$/i.exec(dataUrl);
   const b64 = match ? match[2] : dataUrl.replace(/^data:.*;base64,/, "");
-  const bytes = Uint8Array.from(Buffer.from(b64, "base64"));
+  const bytes = b64ToBytes(b64);
   const ext = match && /jpe?g/i.test(match[1]) ? "jpg" : "png";
   return { bytes, ext };
 }
@@ -122,7 +135,7 @@ function photoBlock(p: PhotoEntry, idx: number): (Paragraph | Table)[] {
   return out;
 }
 
-export async function buildReportDocx(payload: ReportPayload): Promise<Uint8Array> {
+export async function buildReportDocx(payload: ReportPayload): Promise<Blob> {
   const { meta, log, photos } = payload;
 
   const header: Paragraph[] = [
@@ -173,7 +186,7 @@ export async function buildReportDocx(payload: ReportPayload): Promise<Uint8Arra
   }
 
   const doc = new Document({
-    creator: "Brain Loft Studios",
+    creator: "Linework Studios",
     title: `Daily Report ${meta.reportNo || ""} — ${meta.contractNo}`,
     styles: {
       default: { document: { run: { font: "Calibri" } } },
@@ -186,6 +199,5 @@ export async function buildReportDocx(payload: ReportPayload): Promise<Uint8Arra
     ],
   });
 
-  const blob = await Packer.toBuffer(doc);
-  return new Uint8Array(blob);
+  return Packer.toBlob(doc);
 }

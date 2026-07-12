@@ -24,8 +24,8 @@ async function openRouter(system: string, content: ORContent, maxTokens: number)
       headers: {
         Authorization: `Bearer ${key}`,
         "Content-Type": "application/json",
-        "HTTP-Referer": "https://brainloftstudios.com",
-        "X-Title": "Brain Loft Studios",
+        "HTTP-Referer": "https://jasminelineworks.com",
+        "X-Title": "Linework Studios",
       },
       body: JSON.stringify({
         model: process.env.OPENROUTER_MODEL || OR_DEFAULT_MODEL,

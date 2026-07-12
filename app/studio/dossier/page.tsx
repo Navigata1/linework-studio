@@ -1,7 +1,7 @@
 import { StudioShell } from "@/components/studio/StudioShell";
 import { DossierForm } from "@/components/dossier/DossierForm";
 
-export const metadata = { title: "Site Dossier · Brain Loft Studios" };
+export const metadata = { title: "Site Dossier · Linework Studios" };
 
 export default function DossierPage() {
   return (
