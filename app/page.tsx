@@ -11,8 +11,7 @@ import { Manifesto } from "@/components/site/Manifesto";
 import { BeforeAfter } from "@/components/site/BeforeAfter";
 import { Reveal } from "@/components/site/Reveal";
 import { LilyPad } from "@/components/ui/LilyPad";
-import { LineworkMark, DraftedMark } from "@/components/brand/Logo";
-import { STUDIO, TOOLS, SERVICES, ACCENT_VAR } from "@/lib/brand";
+import { STUDIO, SERVICES } from "@/lib/brand";
 
 const STATIONS = [
   { id: "top", label: "00 · Surface" },
@@ -48,8 +47,8 @@ export default function Home() {
             drafted <span className="text-[var(--color-blue)] text-glow">true</span>.
           </h1>
           <p className="rise rise-3 mt-7 max-w-[50ch] text-[clamp(1rem,1.4vw,1.2rem)] text-[var(--color-dim)]">
-            A California CAD &amp; inspection studio — NorCal field, SoCal roots — and the operating system that runs it.
-            Sketches become drawings. Site photos become reports. Addresses become dossiers.
+            A California CAD &amp; drafting studio — NorCal field, SoCal roots. Your sketch, red-line, or flat
+            PDF becomes clean, editable, permit-ready CAD — drafted true and delivered fast.
           </p>
           <div className="rise rise-4 mt-10 flex flex-wrap items-center gap-4">
             <Link
@@ -59,17 +58,17 @@ export default function Home() {
               START A PROJECT →
             </Link>
             <Link
-              href="/studio"
+              href="/#services"
               className="mono rounded-sm border border-[var(--color-line-2)] px-6 py-3.5 text-[12px] font-semibold tracking-wide text-[var(--color-ink)] transition-colors hover:border-[var(--color-blue)] hover:text-[var(--color-blue)]"
             >
-              ENTER THE STUDIO
+              SEE SERVICES
             </Link>
           </div>
           <div className="rise rise-5 mt-14 flex flex-wrap gap-x-10 gap-y-3">
             {[
-              ["Report prep", "cut in half"],
-              ["Site research", "2 days → minutes"],
-              ["Deliverables", "always editable"],
+              ["Quotes", "usually same day"],
+              ["Turnaround", "days, not weeks"],
+              ["Deliverables", "native DWG/DXF + PDF"],
             ].map(([k, v]) => (
               <div key={k}>
                 <div className="mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-faint)]">{k}</div>
@@ -156,39 +155,34 @@ export default function Home() {
         </Reveal>
       </section>
 
-      {/* ───────── THE STUDIO OS ───────── */}
-      <section id="tools" className="border-b border-[var(--color-line)] py-24 md:py-28">
+      {/* ───────── START BAND ───────── */}
+      <section id="start" className="border-b border-[var(--color-line)] py-24 md:py-28">
         <Reveal className="container-studio">
-          <div className="flex items-end justify-between gap-6 border-b border-[var(--color-line)] pb-6">
-            <div>
-              <p className="rv eyebrow">The Studio OS · three instruments</p>
-              <h2 className="rv rv-d1 mt-3 text-[clamp(1.9rem,3.8vw,3rem)]">One login. The whole workflow.</h2>
+          <div className="glass glass-spec backdrop-blur-2xl backdrop-saturate-150 relative overflow-hidden p-10 md:p-14">
+            <p className="rv eyebrow" style={{ color: "var(--color-amber)" }}>No marketplaces · no middlemen</p>
+            <h2 className="rv rv-d1 mt-3 max-w-[24ch] text-[clamp(1.9rem,3.8vw,3rem)]">
+              Send whatever you have. <span className="serif italic">It comes back drawn true.</span>
+            </h2>
+            <p className="rv rv-d2 mt-4 max-w-[58ch] text-[var(--color-dim)]">
+              A photo of a napkin sketch, a red-lined print, a flat PDF, field notes with dimensions —
+              submit it with your deadline and it lands as a clean brief. A quote comes back, usually the
+              same day, and the studio's own AI-assisted drafting pipeline turns it around fast without
+              ever taking judgment away from the engineer.
+            </p>
+            <div className="rv rv-d3 mt-8 flex flex-wrap gap-4">
+              <Link
+                href="/hire"
+                className="mono rounded-sm bg-[var(--color-amber)] px-6 py-3.5 text-[12px] font-bold tracking-wide text-[var(--color-void)] transition-transform hover:-translate-y-0.5"
+              >
+                START A PROJECT →
+              </Link>
+              <Link
+                href="/#services"
+                className="mono rounded-sm border border-[var(--color-line-2)] px-6 py-3.5 text-[12px] font-semibold tracking-wide text-[var(--color-ink)] transition-colors hover:border-[var(--color-amber)] hover:text-[var(--color-amber)]"
+              >
+                BROWSE SERVICES
+              </Link>
             </div>
-            <Link href="/studio" className="rv mono sweep hidden text-[12px] tracking-wide text-[var(--color-blue)] md:block">
-              OPEN STUDIO →
-            </Link>
-          </div>
-          <div className="mt-10 grid gap-6 md:grid-cols-3">
-            {TOOLS.filter((t) => t.public).map((t, i) => (
-              <div key={t.slug} className={`rv rv-d${i + 1}`}>
-                <LilyPad bobDelay={`${i * 2.3}s`} maxTilt={7}>
-                  <Link
-                    href={t.href}
-                    className="glass glass-spec backdrop-blur-2xl backdrop-saturate-150 group flex h-full flex-col p-7"
-                    style={{ ["--accent" as string]: ACCENT_VAR[t.accent] }}
-                  >
-                    <div className="relative flex items-center justify-between">
-                      <span className="mono text-[11px] tracking-[0.18em]" style={{ color: ACCENT_VAR[t.accent] }}>{t.code}</span>
-                      <span className="mono text-[10px] uppercase tracking-[0.16em] text-[var(--color-faint)]">{String(i + 1).padStart(2, "0")} / 03</span>
-                    </div>
-                    <h3 className="relative mt-6 text-2xl font-semibold">{t.name}</h3>
-                    <p className="relative mt-3 flex-1 text-[14px] leading-relaxed text-[var(--color-dim)]">{t.blurb}</p>
-                    <span className="relative mt-6 mono text-[11px] font-semibold tracking-wide" style={{ color: ACCENT_VAR[t.accent] }}>OPEN →</span>
-                    <span className="absolute bottom-0 left-0 h-[2px] w-0 transition-all duration-500 group-hover:w-full" style={{ background: ACCENT_VAR[t.accent] }} />
-                  </Link>
-                </LilyPad>
-              </div>
-            ))}
           </div>
         </Reveal>
       </section>
@@ -196,16 +190,16 @@ export default function Home() {
       {/* ───────── PROCESS ───────── */}
       <section id="process" className="border-b border-[var(--color-line)] py-24">
         <Reveal className="container-studio">
-          <p className="rv eyebrow">How the studio works</p>
+          <p className="rv eyebrow">How it works</p>
           <h2 className="rv rv-d1 mt-3 max-w-[22ch] text-[clamp(1.9rem,3.8vw,3rem)]">
-            The tedious half of the job, <span className="serif italic">engineered away</span>.
+            Four steps from <span className="serif italic">idea to drawing</span>.
           </h2>
           <div className="mt-12 grid gap-px overflow-hidden border border-[var(--color-line)] bg-[var(--color-line)] md:grid-cols-4">
             {[
-              ["01", "Capture", "Photos, sketches, an address. Whatever the field hands you."],
-              ["02", "Compile", "EXIF, AI drafting, county records — the studio does the assembly."],
-              ["03", "Review", "You correct, refine, approve. Judgment stays with the engineer."],
-              ["04", "Deliver", "Editable Word docs, cited dossiers, quotable briefs. Client-ready."],
+              ["01", "Send it", "A sketch photo, red-lined print, PDF, or dimensions — whatever you have."],
+              ["02", "Get your quote", "A scoped, fixed quote comes back fast — usually the same day."],
+              ["03", "Drafting", "Your project is drawn in AutoCAD, reviewed and quality-checked by the engineer."],
+              ["04", "Delivery", "Native DWG/DXF plus PDF, layered and editable. Revisions handled in-thread."],
             ].map(([n, h, p], i) => (
               <div key={n} className={`rv rv-d${i + 1} bg-[var(--color-panel)] p-7`}>
                 <span className="mono text-[13px] font-bold text-[var(--color-blue)]">{n}</span>
@@ -213,54 +207,6 @@ export default function Home() {
                 <p className="mt-2 text-[13.5px] leading-relaxed text-[var(--color-dim)]">{p}</p>
               </div>
             ))}
-          </div>
-        </Reveal>
-      </section>
-
-      {/* ───────── IDENTITY ───────── */}
-      <section id="brand" className="border-b border-[var(--color-line)] py-24">
-        <Reveal className="container-studio">
-          <p className="rv eyebrow">Identity · one studio, two marks</p>
-          <h2 className="rv rv-d1 mt-3 text-[clamp(1.9rem,3.8vw,3rem)]">The name on the door.</h2>
-          <p className="rv rv-d2 mt-4 max-w-[62ch] text-[var(--color-dim)]">
-            <em className="serif italic text-[var(--color-ink)]">Inspired Design</em> is the ethos — Jasmine's own phrase, and the
-            soul of the studio. <strong className="font-semibold text-[var(--color-ink)]">Linework Studios</strong> is
-            its name: linework is the drafter's own word for the lines of a drawing — the name is
-            the craft itself. The signature below stamps every sheet that leaves it.
-          </p>
-          <div className="mt-10 grid gap-6 md:grid-cols-2">
-            <div className="rv rv-d2">
-              <LilyPad bobDelay="0.8s" maxTilt={6}>
-                <div className="glass glass-spec backdrop-blur-2xl backdrop-saturate-150 relative p-8">
-                  <span className="absolute right-5 top-5 mono text-[10px] tracking-wide text-[var(--color-good)]">✓ AVAILABLE · $11.25/YR</span>
-                  <LineworkMark size={52} />
-                  <h3 className="mt-5 font-[family-name:var(--font-display)] text-2xl font-bold">
-                    Line<span className="text-[var(--color-blue)]">work</span> Studios
-                  </h3>
-                  <p className="mono mt-1 text-[12px] text-[var(--color-dim)]">jasminelineworks.com</p>
-                  <p className="mt-4 text-[14px] leading-relaxed text-[var(--color-dim)]">
-                    Every drawing is made of linework — weight, precision, intent. Jasmine's pick,
-                    and the name over the door of all three instruments of the studio.
-                  </p>
-                </div>
-              </LilyPad>
-            </div>
-            <div className="rv rv-d3">
-              <LilyPad bobDelay="2.6s" maxTilt={6}>
-                <div className="glass glass-spec backdrop-blur-2xl backdrop-saturate-150 relative p-8">
-                  <span className="absolute right-5 top-5 mono text-[10px] tracking-wide text-[var(--color-good)]">✓ AVAILABLE · $11.25/YR</span>
-                  <DraftedMark size={52} />
-                  <h3 className="mt-5 font-[family-name:var(--font-display)] text-2xl font-bold">
-                    drafted<span className="text-[var(--color-amber)]">by</span>jj
-                  </h3>
-                  <p className="mono mt-1 text-[12px] text-[var(--color-dim)]">draftedbyjj.com</p>
-                  <p className="mt-4 text-[14px] leading-relaxed text-[var(--color-dim)]">
-                    The signature. Warm, personal, memorable — stamped in the corner of every sheet the
-                    studio ships, the way a hand signs finished work.
-                  </p>
-                </div>
-              </LilyPad>
-            </div>
           </div>
         </Reveal>
       </section>

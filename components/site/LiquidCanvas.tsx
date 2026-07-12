@@ -162,7 +162,10 @@ export function LiquidCanvas() {
     // uTrail(16 vec4) + uDir(16→8 packed by GL) + scalars: need headroom
     if ((gl.getParameter(gl.MAX_FRAGMENT_UNIFORM_VECTORS) as number) < 40) return bail();
 
-    const src = "#extension GL_OES_standard_derivatives : enable\n" + FRAG;
+    const coarse = window.matchMedia("(pointer: coarse)").matches;
+    const src =
+      "#extension GL_OES_standard_derivatives : enable\n" +
+      (coarse ? FRAG.replace("for(int i=0;i<5;i++)", "for(int i=0;i<4;i++)") : FRAG);
     let prog: WebGLProgram | null = null;
     let raf = 0;
     let uRes: WebGLUniformLocation | null = null,
@@ -180,9 +183,14 @@ export function LiquidCanvas() {
     };
 
     // ── GPU state init (also used on context-restore) ─────────────
-    const SCALE = 0.72;
+    // Coarse-pointer (phone/tablet) profile: smaller backbuffer, DPR 1.0,
+    // one fewer fbm octave, and a 30fps cap. Phone GPUs sit right at the
+    // edge of this shader — the cap trades imperceptible frames for a
+    // scroll thread that never has to wait on the compositor.
+    const SCALE = coarse ? 0.55 : 0.72;
     let aspect = 1;
-    const dprCap = Math.min(window.devicePixelRatio || 1, 1.25);
+    const dprCap = Math.min(window.devicePixelRatio || 1, coarse ? 1.0 : 1.25);
+    const FRAME_MS = coarse ? 1000 / 30 : 0; // 0 = uncapped (desktop)
 
     const resize = () => {
       const w = window.innerWidth, h = window.innerHeight;
@@ -248,14 +256,26 @@ export function LiquidCanvas() {
     };
     window.addEventListener("pointermove", onMove, { passive: true });
 
-    // resize: coalesce bursts to one backbuffer realloc per frame
+    // resize: coalesce bursts to one backbuffer realloc per frame — and on
+    // mobile, ignore the height-only "resizes" caused by the URL bar hiding
+    // during scroll. Reallocating the WebGL backbuffer mid-scroll is the
+    // single biggest source of scroll jank on phones.
     let resizeQueued = false;
+    let lastW = window.innerWidth;
+    let lastH = window.innerHeight;
     const onResize = () => {
+      const w = window.innerWidth, h = window.innerHeight;
+      const widthChanged = w !== lastW;
+      const bigHeightChange = Math.abs(h - lastH) > lastH * 0.25;
+      if (!widthChanged && !bigHeightChange) return; // URL-bar chrome shuffle — skip
+      lastW = w; lastH = h;
       if (resizeQueued) return;
       resizeQueued = true;
       requestAnimationFrame(() => { resizeQueued = false; resize(); });
     };
     window.addEventListener("resize", onResize);
+    const onOrient = () => { lastW = -1; onResize(); }; // rotation always reallocates
+    window.addEventListener("orientationchange", onOrient);
 
     let hidden = false;
     const onVis = () => { hidden = document.hidden; };
@@ -273,9 +293,15 @@ export function LiquidCanvas() {
     const trailBuf = new Float32Array(N * 4);
     const dirBuf = new Float32Array(N * 2);
 
+    let lastFrame = 0;
     const tick = () => {
       raf = requestAnimationFrame(tick);
       if (hidden || gl.isContextLost()) return;
+      if (FRAME_MS) {
+        const nowMs = performance.now();
+        if (nowMs - lastFrame < FRAME_MS) return;
+        lastFrame = nowMs;
+      }
       const t = now();
       for (let i = 0; i < N; i++) {
         const s = samples[samples.length - N + i];
@@ -300,6 +326,7 @@ export function LiquidCanvas() {
       cancelAnimationFrame(raf);
       window.removeEventListener("pointermove", onMove);
       window.removeEventListener("resize", onResize);
+      window.removeEventListener("orientationchange", onOrient);
       document.removeEventListener("visibilitychange", onVis);
       canvas.removeEventListener("webglcontextlost", onLost);
       canvas.removeEventListener("webglcontextrestored", onRestored);
